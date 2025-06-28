@@ -1,0 +1,80 @@
+{
+  "name": "@ssit-hub/utils-scripts",
+  "version": "1.0.0",
+  "description": "A powerful CLI tool for directory analysis with tree visualization, file statistics, and line counting capabilities.",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": {
+    "node-utils": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "build:prod": "cross-env NODE_ENV=production node esbuild.config.mjs",
+    "dev": "node esbuild.config.mjs --dev",
+    "start": "node dist/cli.js",
+    "clean": "rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint src/**/*.ts --fix",
+    "format": "prettier --write src/**/*.{ts,js,json}",
+    "format:check": "prettier --check src/**/*.{ts,js,json}",
+    "typecheck": "tsc --noEmit",
+    "ci": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build",
+    "prepublishOnly": "npm run ci && npm run build:prod"
+  },
+  "keywords": [
+    "cli",
+    "directory",
+    "tree",
+    "file-analysis",
+    "line-counter",
+    "project-structure",
+    "development-tools",
+    "nodejs"
+  ],
+  "author": "duyvu871",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/duyvu871/utils-scripts.git"
+  },
+  "homepage": "https://github.com/duyvu871/utils-scripts#readme",
+  "bugs": {
+    "url": "https://github.com/duyvu871/utils-scripts/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "cli-progress": "^3.12.0",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.0",
+    "js-yaml": "^4.1.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.7",
+    "@types/cli-progress": "^3.11.6",
+    "@types/fs-extra": "^11.0.4",
+    "@types/inquirer": "^9.0.7",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.10.0",
+    "@types/yaml": "^1.9.7",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "@vitest/coverage-v8": "^0.34.0",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.19.9",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.0.0",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "5.3.3",
+    "vitest": "^0.34.0"
+  }
+}

@@ -1,0 +1,37 @@
+# The root directory to scan. Can be overridden by the -P or --path flag.
+path: './'
+
+# Optional: Directory where the output file will be written.
+# If not specified, output will be displayed in the console.
+outDir: './output'
+
+# Optional: Count lines of code in files (default: false)
+# When enabled, provides detailed statistics about code lines, comments, and blank lines
+countLines: true
+
+# Optional: Number of top file extensions to show in terminal table (default: 8)
+# Range: 1-20
+topExtensions: 20
+
+# A list of file or directory names to exclude.
+exclude:
+  - 'node_modules'
+  - '.git'
+  - 'package-lock.json'
+  - 'dist'
+  - 'build'
+  - 'coverage'
+  - 'logs'
+  - 'assets'
+  - 'tmp'
+  - 'temp'
+  - '.turbo'
+  - '.vscode'
+  - '.idea'
+  - '.next'
+
+# A list of regular expression patterns to test against file/directory names.
+# Any match will cause the file or directory to be excluded.
+exclude-patterns:
+  - '\\.log$'
+  - '^\\.' # Exclude all hidden files/directories at the root 
