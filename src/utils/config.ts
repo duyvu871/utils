@@ -1,10 +1,10 @@
 /**
  * Configuration Management
  * ========================
- * 
+ *
  * Handles loading and validation of YAML configuration files using Zod schema.
  * Supports both file-based and default configurations.
- * 
+ *
  * @author CLI Utils Team
  * @version 1.0.0
  */
@@ -18,7 +18,7 @@ import { logDebug } from './logger';
 /**
  * Configuration Schema Definition
  * ==============================
- * 
+ *
  * Zod schema for validating YAML configuration files.
  * Ensures type safety and provides clear error messages.
  */
@@ -29,28 +29,28 @@ const configSchema = z.object({
    * Path to directory for analysis (can be relative or absolute)
    */
   path: z.string().default('.'),
-  
+
   /**
    * Output Directory (Optional)
    * ==========================
    * If specified, results will be written to timestamped files
    */
   outDir: z.string().optional(),
-  
+
   /**
    * Line Counting Toggle
    * ===================
    * Enable detailed code line analysis for supported file types
    */
   countLines: z.boolean().default(false),
-  
+
   /**
    * File/Directory Exclusions
    * =========================
    * Direct name matches for exclusion (exact string matching)
    */
   exclude: z.array(z.string()).default(['node_modules', '.git']),
-  
+
   /**
    * Pattern-Based Exclusions
    * ========================
@@ -63,7 +63,7 @@ const configSchema = z.object({
    * ===========================
    * Number of top file extensions to show in terminal table (default: 8)
    */
-  topExtensions: z.number().min(1).max(20).default(8)
+  topExtensions: z.number().min(1).max(20).default(8),
 });
 
 /**
@@ -75,7 +75,7 @@ export type Config = z.infer<typeof configSchema>;
 /**
  * Default Configuration
  * ====================
- * 
+ *
  * Fallback configuration when no config file is provided.
  * Includes sensible defaults for common use cases.
  */
@@ -84,16 +84,16 @@ const defaultConfig: Config = {
   countLines: false,
   exclude: ['node_modules', '.git'],
   'exclude-patterns': [],
-  topExtensions: 8
+  topExtensions: 8,
 };
 
 /**
  * Load Configuration from File or Use Defaults
  * ============================================
- * 
+ *
  * Attempts to load and validate a YAML configuration file.
  * Falls back to default configuration if no file is provided.
- * 
+ *
  * @param configPath - Optional path to YAML config file
  * @returns Validated configuration object
  * @throws Process exit on validation errors or file not found
@@ -118,7 +118,7 @@ export function loadConfig(configPath?: string): Config {
     /**
      * Schema Validation
      * ================
-     * 
+     *
      * Validates the parsed YAML data against the Zod schema.
      * Provides detailed error messages for invalid configurations.
      */
@@ -126,26 +126,35 @@ export function loadConfig(configPath?: string): Config {
 
     if (!validationResult.success) {
       console.error('❌ Error: Invalid configuration file format.');
-      console.error('📋 Validation errors:', validationResult.error.flatten().fieldErrors);
+      console.error(
+        '📋 Validation errors:',
+        validationResult.error.flatten().fieldErrors
+      );
       process.exit(1);
     }
-    
-    logDebug('✅ Configuration is valid. Final config object:', validationResult.data);
-    return validationResult.data;
 
+    logDebug(
+      '✅ Configuration is valid. Final config object:',
+      validationResult.data
+    );
+    return validationResult.data;
   } catch (error: any) {
     /**
      * Error Handling
      * =============
-     * 
+     *
      * Handles various file system and parsing errors
      * with user-friendly error messages.
      */
     if (error.code === 'ENOENT') {
-      console.error(`❌ Error: Configuration file not found at path: ${resolvedPath}`);
+      console.error(
+        `❌ Error: Configuration file not found at path: ${resolvedPath}`
+      );
     } else {
-      console.error(`❌ Error reading or parsing configuration file: ${error.message}`);
+      console.error(
+        `❌ Error reading or parsing configuration file: ${error.message}`
+      );
     }
     process.exit(1);
   }
-} 
+}
